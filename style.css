@@ -1,0 +1,13 @@
+main {
+        background-color: rgb(34, 44, 59);
+        frame-padding: 12, 12;
+}
+
+label {
+        color: rgb(30, 30, 30);
+}
+
+button {
+        color: white;
+        button-color: rgb(52, 120, 246);
+}

@@ -11,7 +11,6 @@ import (
 var cssStyle []byte
 
 func loop(msgchan chan message, messages []message) []message {
-	// Drain all pending messages without blocking UI
 	for {
 		select {
 		case msg := <-msgchan:
@@ -22,7 +21,6 @@ func loop(msgchan chan message, messages []message) []message {
 	}
 
 render:
-	// Table rows (must be []*giu.TableRowWidget)
 	tableRows := make([]*g.TableRowWidget, 0, len(messages))
 	for _, msg := range messages {
 		tableRows = append(tableRows,
@@ -33,7 +31,6 @@ render:
 		)
 	}
 
-	// Build right-side panel widgets
 	rightPanelWidgets := []g.Widget{
 		g.Label("Function Calls"),
 		g.Separator(),
@@ -55,7 +52,6 @@ render:
 		g.Separator(),
 
 		g.Row(
-			// Left side: table
 			g.Child().Size(450, 500).Layout(
 				g.Label("Messages (ID / Name)"),
 				g.Separator(),

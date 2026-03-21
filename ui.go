@@ -3,7 +3,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 
 	g "github.com/AllenDang/giu"
 )
@@ -15,11 +14,6 @@ func buildRows(messages []message) []*g.TableRowWidget {
 			g.Label(fmt.Sprintf("%s", messages[i].Id)),
 			g.Label(messages[i].Name),
 		)
-	}
-
-	if len(rows) > 0 {
-		rows[0].BgColor(&(color.RGBA{200, 100, 100, 255}))
-
 	}
 
 	return rows

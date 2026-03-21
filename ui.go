@@ -1,16 +1,32 @@
+// Package main presents how to implement large, procedurally-generated table.
 package main
 
 import (
-	_ "embed"
 	"fmt"
+	"image/color"
 
 	g "github.com/AllenDang/giu"
 )
 
-//go:embed style.css
-var cssStyle []byte
+func buildRows(messages []message) []*g.TableRowWidget {
+	rows := make([]*g.TableRowWidget, len(messages))
+	for i := range rows {
+		rows[i] = g.TableRow(
+			g.Label(fmt.Sprintf("%s", messages[i].Id)),
+			g.Label(messages[i].Name),
+		)
+	}
+
+	if len(rows) > 0 {
+		rows[0].BgColor(&(color.RGBA{200, 100, 100, 255}))
+
+	}
+
+	return rows
+}
 
 func loop(msgchan chan message, messages []message) []message {
+
 	for {
 		select {
 		case msg := <-msgchan:
@@ -19,55 +35,9 @@ func loop(msgchan chan message, messages []message) []message {
 			goto render
 		}
 	}
-
 render:
-	tableRows := make([]*g.TableRowWidget, 0, len(messages))
-	for _, msg := range messages {
-		tableRows = append(tableRows,
-			g.TableRow(
-				g.Label(msg.Id),
-				g.Label(msg.Name),
-			),
-		)
-	}
-
-	rightPanelWidgets := []g.Widget{
-		g.Label("Function Calls"),
-		g.Separator(),
-	}
-
-	if len(messages) == 0 {
-		rightPanelWidgets = append(rightPanelWidgets, g.Label("No function calls yet"))
-	} else {
-		for i, msg := range messages {
-			rightPanelWidgets = append(
-				rightPanelWidgets,
-				g.Label(fmt.Sprintf("%d. %s()", i+1, msg.Name)),
-			)
-		}
-	}
-
 	g.SingleWindow().Layout(
-		g.Label("Incoming Messages"),
-		g.Separator(),
-
-		g.Row(
-			g.Child().Size(450, 500).Layout(
-				g.Label("Messages (ID / Name)"),
-				g.Separator(),
-				g.Table().
-					Columns(
-						g.TableColumn("ID"),
-						g.TableColumn("Name"),
-					).
-					Rows(tableRows...),
-			),
-
-			// Right side: function call list
-			g.Child().Size(300, 500).Layout(
-				rightPanelWidgets...,
-			),
-		),
+		g.Table().Freeze(0, 1).FastMode(true).Columns(g.TableColumn("Id"), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
 	)
 
 	return messages

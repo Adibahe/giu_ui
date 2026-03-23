@@ -35,7 +35,7 @@ func handleConn(conn net.Conn, msgchan chan message) {
 }
 
 func startServer(msgchan chan message) {
-	fmt.Println("Started Server!!")
+	log.Println("Started Server!!")
 
 	const pipename = `\\.\pipe\giu_ui_Pipe`
 

@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"strconv"
 
 	"github.com/AllenDang/giu"
 	g "github.com/AllenDang/giu"
@@ -12,29 +13,40 @@ import (
 // giu State variables
 var sashPos float32 = 500
 var selectedFunction int = -1
-var details string = "Hello World!!"
+var details string = "(⌐■_■) click on function calls"
 
 func buildRows(messages []message) []*g.TableRowWidget {
 	rows := make([]*g.TableRowWidget, len(messages))
-	for i := range rows {
-		rows[i] = g.TableRow(
-			g.Selectable(messages[i].Id).
-				Selected(selectedFunction == i).
-				OnClick(func() {
-					selectedFunction = i
-					details = "Selected:" + messages[i].Id
-					fmt.Println("Selected:", messages[i].Id)
-				}),
-			g.Selectable(messages[i].Name).
-				Selected(selectedFunction == i).
-				OnClick(func() {
-					selectedFunction = i
-					details = "Selected:" + messages[i].Id
-					fmt.Println("Selected:", messages[i].Id)
-				}),
-		)
-		if selectedFunction == i {
-			rows[i].BgColor(&color.RGBA{80, 120, 200, 100})
+	if len(messages) == 0 {
+		return []*g.TableRowWidget{
+			g.TableRow(g.Label("	( ╥﹏╥) 	Nothing yet!!")),
+		}
+	} else {
+		for i := range rows {
+			if messages[i].Name == "" {
+				messages[i].Name = getName(messages[i].Id)
+			}
+			rows[i] = g.TableRow(
+				g.Label(strconv.Itoa(i)),
+				g.Selectable(messages[i].Id).
+					Selected(selectedFunction == i).
+					OnClick(func() {
+						selectedFunction = i
+						go getDesc(messages[i].Id, &details)
+						fmt.Println("Selected:", messages[i].Name)
+					}),
+				g.Selectable(messages[i].Name).
+					Selected(selectedFunction == i).
+					OnClick(func() {
+						selectedFunction = i
+						go getDesc(messages[i].Id, &details)
+						fmt.Println("Selected:", messages[i].Name)
+					}),
+			)
+			if selectedFunction == i {
+				rows[i].BgColor(&color.RGBA{80, 120, 200, 100})
+			}
+
 		}
 	}
 
@@ -64,7 +76,7 @@ render:
 						g.Label("Function List"),
 					),
 				g.Separator(),
-				g.Table().Freeze(0, 1).FastMode(true).Columns(g.TableColumn("Id"), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
+				g.Table().Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id"), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
 			},
 			g.Layout{
 				g.Style().
@@ -73,9 +85,7 @@ render:
 						g.Label("Description"),
 					),
 				g.Separator(),
-				g.InputTextMultiline(&details).
-					Size(-1, 200).
-					Flags(giu.InputTextFlagsReadOnly).ID("Desc"),
+				g.InputTextMultiline(&details).Flags(giu.InputTextFlagsReadOnly).Size(-1, -1),
 			},
 		),
 	)

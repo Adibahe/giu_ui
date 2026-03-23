@@ -27,7 +27,7 @@ func buildRows(messages []message) []*g.TableRowWidget {
 				messages[i].Name = getName(messages[i].Id)
 			}
 			rows[i] = g.TableRow(
-				g.Label(strconv.Itoa(i)),
+				g.Label(strconv.Itoa(i+1)),
 				g.Selectable(messages[i].Id).
 					Selected(selectedFunction == i).
 					OnClick(func() {

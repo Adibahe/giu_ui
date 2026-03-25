@@ -6,7 +6,9 @@ import (
 	"image/color"
 	"strconv"
 
-	"github.com/AllenDang/giu"
+	"giu_ui/giudoc"
+
+	// "github.com/AllenDang/giu"
 	g "github.com/AllenDang/giu"
 )
 
@@ -85,7 +87,7 @@ render:
 						g.Label("Description"),
 					),
 				g.Separator(),
-				g.InputTextMultiline(&details).Flags(giu.InputTextFlagsReadOnly).Size(-1, -1),
+				giudoc.FromHTML(details),
 			},
 		),
 	)

@@ -17,6 +17,11 @@ func main() {
 	// 	panic(err)
 	// }
 
+	msgchan <- message{Id: "3"}
+	msgchan <- message{Id: "200"}
+	msgchan <- message{Id: "10"}
+	msgchan <- message{Id: "33"}
+
 	db = connectDb()
 	defer db.Close()
 	go startServer(msgchan)

@@ -9,6 +9,8 @@ import (
 var db *sql.DB
 var recent = make(map[string]message)
 
+var monoFont *g.FontInfo
+
 func main() {
 	msgchan := make(chan message, 100)
 	var messages []message
@@ -22,6 +24,8 @@ func main() {
 	go startServer(msgchan)
 
 	wnd := g.NewMasterWindow("Function Call Viewer", 800, 600, 0)
+	monoFont = g.Context.FontAtlas.AddFont("C:/Windows/Fonts/consola.ttf", 16)
+
 	wnd.Run(func() {
 		messages = loop(msgchan, messages)
 	})

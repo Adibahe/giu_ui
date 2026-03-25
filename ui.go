@@ -1,4 +1,3 @@
-// Package main presents how to implement large, procedurally-generated table.
 package main
 
 import (
@@ -10,7 +9,6 @@ import (
 	g "github.com/AllenDang/giu"
 )
 
-// giu State variables
 var sashPos float32 = 500
 var selectedFunction int = -1
 var details string = "(⌐■_■) click on function calls"
@@ -85,7 +83,10 @@ render:
 						g.Label("Description"),
 					),
 				g.Separator(),
-				g.InputTextMultiline(&details).Flags(giu.InputTextFlagsReadOnly).Size(-1, -1),
+				g.Style().SetFontSize(15).SetFont(monoFont).
+					To(
+						g.InputTextMultiline(&details).Flags(giu.InputTextFlagsReadOnly).Size(-1, -1),
+					),
 			},
 		),
 	)

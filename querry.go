@@ -2,10 +2,41 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+
+	htmltomarkdown "github.com/JohannesKaufmann/html-to-markdown"
+	"jaytaylor.com/html2text"
 
 	_ "modernc.org/sqlite"
 )
+
+func htmlTotext(html string) string {
+
+	text, err := html2text.FromString(html, html2text.Options{
+		PrettyTables: true,
+	})
+	if err != nil {
+		log.Println("html2text error: ", err)
+		return html
+	}
+
+	fmt.Println(text)
+	return text
+}
+
+func html2Markdown(html string) string {
+	converter := htmltomarkdown.NewConverter("", true, nil)
+
+	md, err := converter.ConvertString(html)
+	if err != nil {
+		log.Println("html to Markdown error: ", err)
+		return html
+	}
+
+	fmt.Println(md)
+	return md
+}
 
 func getName(id string) string {
 
@@ -56,7 +87,7 @@ func getDesc(id string, details *string) {
 		log.Println("Failed to get Description for", value.Name)
 	}
 
-	value.Content = htmlToReadableText(value.Content)
+	value.Content = htmlTotext(value.Content)
 
 	log.Println("sent desc for: ", value.Name)
 	*details = value.Content

@@ -66,14 +66,13 @@ func startServer(msgchan chan message) {
 	}
 	defer ln.Close()
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			log.Printf("Accept() failed: %v", err)
-			continue
-		}
-
-		handleConn(conn, msgchan)
-
+	//	for {
+	conn, err := ln.Accept()
+	if err != nil {
+		log.Fatalf("Accept() failed: %v", err)
 	}
+
+	handleConn(conn, msgchan)
+
+	//	}
 }

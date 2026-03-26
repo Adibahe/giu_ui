@@ -4,14 +4,15 @@ go 1.25.1
 
 require (
 	github.com/AllenDang/giu v0.14.1
+	github.com/JohannesKaufmann/html-to-markdown v1.6.0
 	github.com/Microsoft/go-winio v0.6.2
+	jaytaylor.com/html2text v0.0.0-20260303211410-1a4bdc82ecec
 	modernc.org/sqlite v1.47.0
 )
 
 require (
 	github.com/AllenDang/cimgui-go v1.3.2-0.20250409185506-6b2ff1aa26b5 // indirect
 	github.com/AllenDang/go-findfont v0.0.0-20200702051237-9f180485aeb8 // indirect
-	github.com/JohannesKaufmann/html-to-markdown v1.6.0 // indirect
 	github.com/PuerkitoBio/goquery v1.9.2 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -42,7 +43,6 @@ require (
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sys v0.42.0 // indirect
 	gopkg.in/eapache/queue.v1 v1.1.0 // indirect
-	jaytaylor.com/html2text v0.0.0-20260303211410-1a4bdc82ecec // indirect
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect

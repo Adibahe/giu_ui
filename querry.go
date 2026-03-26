@@ -42,7 +42,7 @@ func getName(id string) string {
 
 	value, exists := recent[id]
 	if exists {
-		log.Println("Recieved Name via map: ", value.Name)
+		log.Println("Recieved Name via map: " + value.Name)
 		return value.Name
 	}
 
@@ -51,7 +51,7 @@ func getName(id string) string {
 	var name string
 	err := db.QueryRow(querry, id).Scan(&name)
 	if err != nil {
-		log.Println("Failed to get Name for", id, "At getName in querry.go")
+		log.Println("Failed to get Name for" + id + "At getName in querry.go")
 	}
 
 	var msg message
@@ -61,7 +61,7 @@ func getName(id string) string {
 	msg.Content = ""
 	recent[id] = msg
 
-	log.Println("Recieved Name: ", name)
+	log.Println("Recieved Name: " + name)
 	return name
 
 }
@@ -71,7 +71,7 @@ func getDesc(id string, details *string) {
 	value, _ := recent[id]
 
 	if value.Content != "" {
-		log.Println("Sent desc through map for: ", value.Name)
+		log.Println("Sent desc through map for: " + value.Name)
 		*details = value.Content
 		return
 	}
@@ -84,12 +84,12 @@ func getDesc(id string, details *string) {
 	`
 	err := db.QueryRow(querry, id).Scan(&value.Content)
 	if err != nil {
-		log.Println("Failed to get Description for", value.Name)
+		log.Println("Failed to get Description for " + value.Name)
 	}
 
 	value.Content = htmlTotext(value.Content)
 
-	log.Println("sent desc for: ", value.Name)
+	log.Println("sent desc for: " + value.Name)
 	*details = value.Content
 	recent[id] = value
 }

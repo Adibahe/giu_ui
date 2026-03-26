@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"image/color"
 	"strconv"
+	"strings"
 
 	"github.com/AllenDang/giu"
 	g "github.com/AllenDang/giu"
 )
 
-var sashPos float32 = 500
+var sashPos1 float32 = 600
+var sashPos2 float32 = 500
 var selectedFunction int = -1
 var details string = "(⌐■_■) click on function calls"
+var text = ""
 
 func buildRows(messages []message) []*g.TableRowWidget {
 	rows := make([]*g.TableRowWidget, len(messages))
@@ -45,10 +48,21 @@ func buildRows(messages []message) []*g.TableRowWidget {
 				rows[i].BgColor(&color.RGBA{80, 120, 200, 100})
 			}
 
+			if matchSearch(messages[i].Name, text) {
+				rows[i].BgColor(&color.RGBA{255, 220, 100, 120})
+			}
+
 		}
 	}
 
 	return rows
+}
+
+func matchSearch(name string, text string) bool {
+	if text == "" {
+		return false
+	}
+	return strings.Contains(strings.ToLower(name), strings.ToLower(text))
 }
 
 func loop(msgchan chan message, messages []message) []message {
@@ -61,12 +75,13 @@ func loop(msgchan chan message, messages []message) []message {
 			goto render
 		}
 	}
+
 render:
 
 	g.SingleWindow().Layout(
 		g.SplitLayout(
 			g.DirectionVertical,
-			&sashPos,
+			&sashPos2,
 			g.Layout{
 				g.Style().
 					SetFontSize(15).
@@ -74,7 +89,24 @@ render:
 						g.Label("Function List"),
 					),
 				g.Separator(),
-				g.Table().Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id"), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
+				// g.SplitLayout(
+				// 	g.DirectionHorizontal,
+				// 	&sashPos1,
+				// 	g.Layout{
+				// 		g.Table().Size(-1, -1).Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id"), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
+				// 	},
+				// 	g.Layout{
+				// 		g.Separator(),
+				// 		g.Row(g.Label("Search"), g.InputText(&text).Size(-1).AutoComplete(keys).Size(300)),
+				// 	},
+				// ),
+				g.Layout{
+					g.Table().Flags(g.TableFlagsSizingFixedFit).Size(-1, 900).Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id").InnerWidthOrWeight(40), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
+				},
+				g.Layout{
+					g.Separator(),
+					g.Row(g.Label("Search"), g.InputText(&text).Size(-1)),
+				},
 			},
 			g.Layout{
 				g.Style().

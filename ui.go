@@ -82,12 +82,12 @@ render:
 		g.SplitLayout(
 			g.DirectionVertical,
 			&sashPos2,
+
 			g.Layout{
-				g.Style().
-					SetFontSize(15).
-					To(
-						g.Label("Function List"),
-					),
+
+				g.Separator(),
+
+				g.Row(g.Label("Search"), g.InputText(&text).Size(-1)),
 				g.Separator(),
 				// g.SplitLayout(
 				// 	g.DirectionHorizontal,
@@ -101,11 +101,7 @@ render:
 				// 	},
 				// ),
 				g.Layout{
-					g.Table().Flags(g.TableFlagsSizingFixedFit).Size(-1, 900).Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id").InnerWidthOrWeight(40), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
-				},
-				g.Layout{
-					g.Separator(),
-					g.Row(g.Label("Search"), g.InputText(&text).Size(-1)),
+					g.Table().Flags(g.TableFlagsSizingFixedFit).Size(-1, 880).Freeze(0, 1).FastMode(true).Columns(g.TableColumn("S/N."), g.TableColumn("Id").InnerWidthOrWeight(40), g.TableColumn("Function Name")).Rows(buildRows(messages)...),
 				},
 			},
 			g.Layout{

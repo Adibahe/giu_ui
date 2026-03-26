@@ -10,7 +10,6 @@ import (
 
 var db *sql.DB
 var recent = make(map[string]message)
-
 var monoFont *g.FontInfo
 
 func main() {

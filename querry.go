@@ -21,7 +21,7 @@ func htmlTotext(html string) string {
 		return html
 	}
 
-	fmt.Println(text)
+	// fmt.Println(text)
 	return text
 }
 

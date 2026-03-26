@@ -4,10 +4,29 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand/v2"
 	"net"
+	"strconv"
+	"time"
 
 	winio "github.com/Microsoft/go-winio"
 )
+
+func testingUi(msgchan chan message) {
+	log.Println("in testingUi")
+
+	for {
+
+		var msg message
+		n := rand.Int64N(1000)
+		msg.Id = strconv.FormatInt(n, 10)
+		msg.Name = ""
+
+		msgchan <- msg
+
+		time.Sleep(time.Second)
+	}
+}
 
 func handleConn(conn net.Conn, msgchan chan message) {
 	defer conn.Close()
@@ -15,21 +34,23 @@ func handleConn(conn net.Conn, msgchan chan message) {
 	decoder := json.NewDecoder(conn)
 	encoder := json.NewEncoder(conn)
 
-	var msg message
-	err := decoder.Decode(&msg)
-	if err != nil {
-		log.Printf("decode failed: %v", err)
-	}
-	fmt.Printf("id: %s funcName: %s \n", msg.Id, msg.Name)
-	msgchan <- msg // adding messages to channel
+	for {
+		var msg message
+		err := decoder.Decode(&msg)
+		if err != nil {
+			log.Printf("decode failed: %v", err)
+		}
+		fmt.Printf("id: %s funcName: %s \n", msg.Id, msg.Name)
+		msgchan <- msg
 
-	var resp response
-	resp.Ok = true
-	resp.Msg = "got it!!"
+		var resp response
+		resp.Ok = true
+		resp.Msg = "got it!!"
 
-	err = encoder.Encode(&resp)
-	if err != nil {
-		log.Fatalf("Encoder failed: %v", err)
+		err = encoder.Encode(&resp)
+		if err != nil {
+			log.Fatalf("Encoder failed: %v", err)
+		}
 	}
 
 }

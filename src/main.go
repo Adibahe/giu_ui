@@ -25,13 +25,6 @@ func main() {
 	db = connectDb()
 	defer db.Close()
 
-	if !*test {
-		go openPipe(msgchan) // used to get data from backend (eg. function calls id)
-	} else {
-		log.Println("in testingUi")
-		// go testingUi(msgchan)
-	}
-
 	go startServer() // hosts webpage on localhost
 
 	// starts webview
@@ -41,6 +34,16 @@ func main() {
 	w.SetTitle("BinStop")
 	w.SetSize(900, 700, webview.HintNone)
 	w.Navigate("http://localhost:8080")
+
+	if !*test {
+		go openPipe(msgchan) // used to get data from backend (eg. function calls, id)
+	} else {
+		log.Println("in testingUi")
+		go testingUi(msgchan)
+	}
+
+	uiUpdater(w, msgchan)
+	giveToJs(w)
 	w.Run()
 
 }

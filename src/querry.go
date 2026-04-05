@@ -87,7 +87,9 @@ func getDesc(id string, details *string) {
 		log.Println("Failed to get Description for " + value.Name)
 	}
 
-	value.Content = htmlTotext(value.Content)
+	// fmt.Println("======================================= Description for", value.Name, "=======================================")
+	// fmt.Println(value.Content)
+	// fmt.Println("================================================== END =======================================================")
 
 	log.Println("sent desc for: " + value.Name)
 	*details = value.Content

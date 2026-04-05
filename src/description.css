@@ -1,0 +1,191 @@
+/* =========================================
+   Description Panel Content Styling
+   Applies only to HTML inserted inside #descContent
+   ========================================= */
+
+#descContent {
+    color: #c9d1d9;
+    font-family: Consolas, "Courier New", monospace;
+    line-height: 1.6;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+/* Paragraphs */
+#descContent p {
+    margin: 0 0 14px 0;
+    color: #c9d1d9;
+}
+
+/* Headings */
+#descContent h1,
+#descContent h2,
+#descContent h3,
+#descContent h4,
+#descContent h5,
+#descContent h6 {
+    color: #58a6ff;
+    margin: 22px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #30363d;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+#descContent h1 {
+    font-size: 24px;
+}
+
+#descContent h2 {
+    font-size: 20px;
+}
+
+#descContent h3 {
+    font-size: 17px;
+}
+
+#descContent h4 {
+    font-size: 15px;
+}
+
+#descContent h5,
+#descContent h6 {
+    font-size: 14px;
+}
+
+/* Inline code */
+#descContent code {
+    background-color: #161b22;
+    color: #79c0ff;
+    padding: 2px 5px;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+/* Code blocks */
+#descContent pre {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 14px;
+    margin: 14px 0 18px 0;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+
+#descContent pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 13px;
+    display: block;
+    white-space: pre;
+}
+
+/* Links */
+#descContent a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+#descContent a:hover {
+    text-decoration: underline;
+    color: #79c0ff;
+}
+
+/* Lists */
+#descContent ul,
+#descContent ol {
+    margin: 0 0 16px 24px;
+    padding: 0;
+}
+
+#descContent li {
+    margin-bottom: 8px;
+}
+
+/* Blockquotes */
+#descContent blockquote {
+    margin: 16px 0;
+    padding: 10px 14px;
+    border-left: 4px solid #58a6ff;
+    background-color: #161b22;
+    color: #c9d1d9;
+    border-radius: 4px;
+}
+
+/* Horizontal rule */
+#descContent hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 24px 0;
+}
+
+/* Tables inside description */
+#descContent table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#descContent thead {
+    background-color: #21262d;
+}
+
+#descContent th,
+#descContent td {
+    padding: 10px 12px;
+    border: 1px solid #30363d;
+    text-align: left;
+    vertical-align: top;
+    font-size: 13px;
+}
+
+#descContent th {
+    color: #58a6ff;
+    font-weight: 600;
+}
+
+/* Bold / emphasis */
+#descContent strong,
+#descContent b {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+#descContent em,
+#descContent i {
+    color: #c9d1d9;
+    font-style: italic;
+}
+
+/* Empty code container placeholder */
+#descContent .code {
+    min-height: 8px;
+}
+
+/* Optional custom scrollbar for descContent */
+#descContent::-webkit-scrollbar {
+    width: 10px;
+}
+
+#descContent::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+
+#descContent::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 6px;
+}
+
+#descContent::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+}

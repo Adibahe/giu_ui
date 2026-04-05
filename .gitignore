@@ -1,5 +1,3 @@
-*.exe
-*.sqlite3
-*.db
-giu_ui.exe
-ntdocs.sqlite3
+./src/*.exe
+./src/*.sqlite3
+./src/*.db

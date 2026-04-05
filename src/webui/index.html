@@ -1,20 +1,51 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>WebView Demo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function Table</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="description.css" /> -->
+
 </head>
 
 <body>
     <div class="container">
-        <h1>Go + WebView</h1>
-        <button id="btn">Click me</button>
-        <p id="output">Waiting...</p>
+        <div class="content" id="splitContainer">
+            <div class="panel table-panel" id="tablePanel">
+                <h4>Function Table</h4>
+
+                <table> <!-- Right panel -->
+                    <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>ID</th>
+                            <th>Function Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically later -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="divider" class="divider"></div>
+
+            <div id="descPanel" class="panel desc-panel"> <!-- Left panel -->
+                <h4>Description</h4>
+                <div id="descContent"></div>
+            </div>
+        </div>
+    </div>
+    <div class="toolbar">
+        <button class="tool-btn">start</button>
+        <button class="tool-btn">stop</button>
+        <button class="tool-btn">resume</button>
     </div>
 
-    <script src="app.js"></script>
+    <script src="script.js"></script>
+
 </body>
 
 </html>

@@ -154,3 +154,9 @@ tbody tr:hover {
     background-color: #30363d;
     color: #58a6ff;
 }
+
+.descPanel {
+    overflow: scroll;
+    scrollbar-color: red orange;
+    scrollbar-width: thin;
+}

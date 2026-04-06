@@ -15,8 +15,8 @@ import (
 
 func testingUi(msgchan chan message) {
 	log.Println("in testingUi")
-
-	for {
+	i := 0
+	for i < 6 {
 
 		var msg message
 		n := rand.Int64N(1000)
@@ -26,6 +26,7 @@ func testingUi(msgchan chan message) {
 		msgchan <- msg
 
 		time.Sleep(time.Second)
+		i++
 	}
 }
 

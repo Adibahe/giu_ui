@@ -88,7 +88,8 @@ func getDesc(id string, details *string) {
 	}
 
 	// fmt.Println("======================================= Description for", value.Name, "=======================================")
-	// fmt.Println(value.Content)
+	// // fmt.Println(value.Content)
+	// // correctLinks(&value.Content)
 	// fmt.Println("================================================== END =======================================================")
 
 	log.Println("sent desc for: " + value.Name)

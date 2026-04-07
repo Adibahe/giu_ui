@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"fmt"
 	"log"
 
 	g "github.com/AllenDang/giu"
@@ -20,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	msgchan := make(chan message, 100)
-	// var messages []message
+	var messages []message
 
 	db = connectDb()
 	defer db.Close()
@@ -44,7 +45,14 @@ func main() {
 	}
 
 	w.Bind("openExternalLink", openExternalLink)
-	uiUpdater(w, msgchan)
+	uiUpdater(w, msgchan, &messages)
+	w.Bind("onPageReload", func() {
+		log.Println("Webpage Reloaded")
+		for _, msg := range messages {
+			js := fmt.Sprintf(`window.addRow(%q, %q)`, msg.Id, msg.Name)
+			w.Eval(js)
+		}
+	})
 	giveToJs(w)
 	w.Run()
 

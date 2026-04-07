@@ -87,3 +87,40 @@ document.addEventListener("click", function (e) {
 		.then(res => console.log("Opened link:", href, res))
 		.catch(err => console.error("Failed to open link:", err));
 });
+
+function searchFunction() {
+	const searchInput = document.getElementById("searchBar");
+	const filter = searchInput.value.trim().toLowerCase();
+
+	const table = document.getElementById("funcTable");
+	const rows = table.getElementsByTagName("tr");
+
+	for (let i = 1; i < rows.length; i++) {
+		rows[i].style.backgroundColor = "";
+		rows[i].style.color = "#ffffff"
+	}
+
+	if (filter === "") return;
+
+	for (let i = 1; i < rows.length; i++) {
+		const cells = rows[i].getElementsByTagName("td");
+
+		// Function Name is the 3rd column
+		if (cells.length >= 3) {
+			const functionName = cells[2].textContent.toLowerCase();
+
+			if (functionName.includes(filter)) {
+				rows[i].style.backgroundColor = "#baa87cff";
+				rows[i].style.color = "#000000";
+			}
+		}
+	}
+}
+
+window.addEventListener("load", function () {
+	if (typeof onPageReload === "function") {
+		onPageReload()
+			.then(res => console.log("Go returned:", res))
+			.catch(err => console.error(err));
+	}
+});

@@ -9,20 +9,28 @@ import (
 )
 
 func addTableRow(w webview.WebView, id string, functionName string) {
-	functionName = getName(id)
 	w.Dispatch(func() {
 		js := fmt.Sprintf(`window.addRow(%q, %q)`, id, functionName)
 		w.Eval(js)
-		fmt.Printf("sent: %s, %s \n", id, functionName)
+		log.Printf("sent: %s, %s \n", id, functionName)
 	})
 }
 
-func uiUpdater(w webview.WebView, msgChan <-chan message) {
+func uiUpdater(w webview.WebView, msgChan <-chan message, messages *[]message) {
 	go func() {
 		for msg := range msgChan {
+
+			msg.Name = getName(msg.Id)
+
+			*messages = append(*messages, msg)
+			fmt.Print(*messages)
 			addTableRow(w, msg.Id, msg.Name)
 		}
 	}()
+}
+
+func onPageReload(messages []message) {
+	fmt.Println("Webpage loaded/reloaded")
 }
 
 func giveToJs(w webview.WebView) {

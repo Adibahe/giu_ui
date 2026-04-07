@@ -164,3 +164,23 @@ tbody tr:hover {
     scrollbar-color: #222730 #161b22;
     scrollbar-width: thin;
 }
+
+.table-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+#searchBar {
+    border-radius: 5px;
+    background-color: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+
+    width: 90%;
+    min-width: 180px;
+    max-width: 320px;
+
+    padding: 8px 10px;
+    height: auto;
+    margin-top: auto;
+}

@@ -16,7 +16,7 @@
             <div class="panel table-panel" id="tablePanel">
                 <h4>Function Table</h4>
 
-                <table> <!-- Right panel -->
+                <table id="funcTable"> <!-- Right panel -->
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -28,6 +28,7 @@
                         <!-- Rows will be added dynamically later -->
                     </tbody>
                 </table>
+                <input type="text" id="searchBar" onkeyup="searchFunction()" placeholder="Search function name...">
             </div>
 
             <div id="divider" class="divider"></div>

@@ -69,3 +69,21 @@ window.loadDescriptionFromGo = async function (id) {
 		console.error("Failed to load description from Go:", err);
 	}
 };
+
+document.addEventListener("click", function (e) {
+	const link = e.target.closest("a");
+	if (!link) return;
+
+	const href = link.getAttribute("href");
+	if (!href) return;
+
+	if (!href.startsWith("http://") && !href.startsWith("https://")) {
+		return;
+	}
+
+	e.preventDefault();
+
+	openExternalLink(href)
+		.then(res => console.log("Opened link:", href, res))
+		.catch(err => console.error("Failed to open link:", err));
+});

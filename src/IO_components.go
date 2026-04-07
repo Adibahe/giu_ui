@@ -88,3 +88,15 @@ func startServer() {
 		log.Fatal(err)
 	}
 }
+
+func waitForServer(url string) {
+	for i := 0; i < 20; i++ {
+		resp, err := http.Get(url)
+		if err == nil {
+			resp.Body.Close()
+			return
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+	log.Fatal("server did not start in time")
+}

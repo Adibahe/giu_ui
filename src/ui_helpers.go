@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os/exec"
 
 	webview "github.com/webview/webview_go"
 )
@@ -33,4 +34,13 @@ func giveToJs(w webview.WebView) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func openExternalLink(url string) string {
+	log.Println("Opening ", url)
+	err := exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	if err != nil {
+		return err.Error()
+	}
+	return "ok"
 }

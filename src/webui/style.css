@@ -13,11 +13,11 @@ body {
 
 .container {
     width: 100%;
-    height: 90vh;
+    height: 92vh;
     background-color: #161b22;
     border: 1px solid #30363d;
     border-radius: 8px;
-    padding: 16px;
+    padding: 8px;
 }
 
 h4 {
@@ -40,13 +40,13 @@ h4 {
     background-color: #0d1117;
     border: 1px solid #30363d;
     border-radius: 6px;
-    padding: 12px;
+    padding: 8px;
 }
 
 /* LEFT panel = takes most space */
 .desc-panel {
     flex: 1;
-    height: 85vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -69,14 +69,16 @@ h4 {
 .table-panel {
     width: 30%;
     overflow-x: auto;
-    height: 85vh;
+    height: 90vh;
+    scrollbar-color: #222730 #161b22;
+    scrollbar-width: thin;
 }
 
 /* Vertical slider / divider */
 .divider {
-    width: 8px;
-    height: 85vh;
-    margin: 0 8px;
+    width: 6px;
+    height: 90vh;
+    margin: 0 4px;
     background-color: #21262d;
     border-radius: 4px;
     cursor: col-resize;
@@ -131,7 +133,7 @@ tbody tr:hover {
 /* Bottom toolbar */
 .toolbar {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,7 +146,7 @@ tbody tr:hover {
     color: #c9d1d9;
     border: 1px solid #30363d;
     border-radius: 6px;
-    padding: 8px 8px;
+    padding: 5px 5px;
     font-family: Consolas, "Courier New", monospace;
     font-size: 12px;
     cursor: pointer;
@@ -155,8 +157,10 @@ tbody tr:hover {
     color: #58a6ff;
 }
 
-.descPanel {
-    overflow: scroll;
-    scrollbar-color: red orange;
+#descContent {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #222730 #161b22;
     scrollbar-width: thin;
 }

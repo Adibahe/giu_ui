@@ -33,6 +33,7 @@ func main() {
 
 	w.SetTitle("BinStop")
 	w.SetSize(900, 700, webview.HintNone)
+	waitForServer("http://localhost:8080")
 	w.Navigate("http://localhost:8080")
 
 	if !*test {
@@ -42,6 +43,7 @@ func main() {
 		go testingUi(msgchan)
 	}
 
+	w.Bind("openExternalLink", openExternalLink)
 	uiUpdater(w, msgchan)
 	giveToJs(w)
 	w.Run()

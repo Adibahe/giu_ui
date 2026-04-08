@@ -4,10 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand/v2"
 	"net"
 	"net/http"
-	"strconv"
 	"time"
 
 	winio "github.com/Microsoft/go-winio"
@@ -15,12 +13,13 @@ import (
 
 func testingUi(msgchan chan message) {
 	log.Println("in testingUi")
+	ids := []string{"604", "166", "8", "868", "869", "12", "189", "461", "148", "256", "205", "153", "743"}
 	i := 0
-	for i < 6 {
+	for _, id := range ids {
 
 		var msg message
-		n := rand.Int64N(1000)
-		msg.Id = strconv.FormatInt(n, 10)
+		// n := rand.Int64N(1000)
+		msg.Id = id
 		msg.Name = ""
 
 		msgchan <- msg
@@ -34,25 +33,16 @@ func handleConn(conn net.Conn, msgchan chan message) {
 	defer conn.Close()
 
 	decoder := json.NewDecoder(conn)
-	encoder := json.NewEncoder(conn)
 
 	for {
 		var msg message
 		err := decoder.Decode(&msg)
 		if err != nil {
 			log.Printf("decode failed: %v", err)
+			break
 		}
 		fmt.Printf("id: %s funcName: %s \n", msg.Id, msg.Name)
 		msgchan <- msg
-
-		var resp response
-		resp.Ok = true
-		resp.Msg = "got it!!"
-
-		err = encoder.Encode(&resp)
-		if err != nil {
-			log.Fatalf("Encoder failed: %v", err)
-		}
 	}
 
 }
@@ -90,14 +80,14 @@ func startServer() {
 }
 
 func waitForServer(url string) {
-	// for i := 0; i < 20; i++ {
-	// 	resp, err := http.Get(url)
-	// 	if err == nil {
-	// 		resp.Body.Close()
-	// 		return
-	// 	}
-	// 	time.Sleep(100 * time.Millisecond)
-	// }
-	// log.Fatal("server did not start in time")
+	for i := 0; i < 20; i++ {
+		resp, err := http.Get(url)
+		if err == nil {
+			resp.Body.Close()
+			return
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+	log.Fatal("server did not start in time")
 
 }

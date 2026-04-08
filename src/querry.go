@@ -38,12 +38,17 @@ import (
 
 func correctLinks(html *string) {
 	reg := regexp.MustCompile(`<a\s+data-linktype="absolute-path"\s+href="([^"]*)">`)
-	strs := reg.FindAllStringSubmatch(*html, -1)
 
-	for _, m := range strs {
-		newStr := "https://learn.microsoft.com" + m[1]
-		*html = strings.Replace(*html, m[1], newStr, -1)
-	}
+	*html = reg.ReplaceAllStringFunc(*html, func(match string) string {
+		sub := reg.FindStringSubmatch(match)
+		if len(sub) < 2 {
+			return match
+		}
+
+		oldHref := sub[1]
+		newHref := "https://learn.microsoft.com" + oldHref
+		return strings.Replace(match, oldHref, newHref, 1)
+	})
 }
 
 func getName(id string) string {

@@ -23,7 +23,6 @@ func uiUpdater(w webview.WebView, msgChan <-chan message, messages *[]message) {
 			msg.Name = getName(msg.Id)
 
 			*messages = append(*messages, msg)
-			fmt.Print(*messages)
 			addTableRow(w, msg.Id, msg.Name)
 		}
 	}()
@@ -45,7 +44,7 @@ func giveToJs(w webview.WebView) {
 }
 
 func openExternalLink(url string) string {
-	log.Println("Opening ", url)
+	// log.Println("Opening ", url)
 	err := exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
 	if err != nil {
 		return err.Error()

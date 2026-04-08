@@ -1,5 +1,5 @@
 window.addRow = function (id, functionName) {
-	const tbody = document.querySelector("table tbody");
+	const tbody = document.querySelector("#funcTable tbody");
 	if (!tbody) return;
 
 	const rowCount = tbody.rows.length;
@@ -8,18 +8,25 @@ window.addRow = function (id, functionName) {
 
 	const tdSrNo = document.createElement("td");
 	tdSrNo.textContent = rowCount + 1;
-
 	const tdID = document.createElement("td");
 	tdID.textContent = id;
 
 	const tdFunc = document.createElement("td");
 	tdFunc.textContent = functionName;
 
+	const tdTime = document.createElement("td");
+	const now = new Date();
+	const hours = String(now.getHours()).padStart(2, "0");
+	const minutes = String(now.getMinutes()).padStart(2, "0");
+	const seconds = String(now.getSeconds()).padStart(2, "0");
+	tdTime.textContent = `${hours}:${minutes}:${seconds}`;
+
 	tr.onclick = function () {
 		loadDescriptionFromGo(id);
 	};
 
 	tr.appendChild(tdSrNo);
+	tr.appendChild(tdTime);
 	tr.appendChild(tdID);
 	tr.appendChild(tdFunc);
 
@@ -105,9 +112,8 @@ function searchFunction() {
 	for (let i = 1; i < rows.length; i++) {
 		const cells = rows[i].getElementsByTagName("td");
 
-		// Function Name is the 3rd column
 		if (cells.length >= 3) {
-			const functionName = cells[2].textContent.toLowerCase();
+			const functionName = cells[3].textContent.toLowerCase();
 
 			if (functionName.includes(filter)) {
 				rows[i].style.backgroundColor = "#baa87cff";

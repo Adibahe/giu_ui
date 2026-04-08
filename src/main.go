@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"time"
 
 	g "github.com/AllenDang/giu"
 	webview "github.com/webview/webview_go"
@@ -35,8 +36,7 @@ func main() {
 	w.SetTitle("BinStop")
 	w.SetSize(900, 700, webview.HintNone)
 	waitForServer("http://localhost:8080")
-	w.Navigate("http://localhost:8080")
-
+	w.Navigate(fmt.Sprintf("http://localhost:8080/?t=%d", time.Now().UnixNano()))
 	if !*test {
 		go openPipe(msgchan) // used to get data from backend (eg. function calls, id)
 	} else {

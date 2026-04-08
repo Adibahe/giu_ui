@@ -184,3 +184,67 @@ tbody tr:hover {
     height: auto;
     margin-top: auto;
 }
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    height: calc(100vh - 60px);
+    /* leave space for toolbar */
+}
+
+.content {
+    display: flex;
+    height: 100%;
+}
+
+#tablePanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 400px;
+    /* or whatever width you want */
+    overflow: hidden;
+}
+
+#tablePanel h4 {
+    margin: 10px;
+    flex-shrink: 0;
+}
+
+.table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    min-height: 0;
+}
+
+#funcTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#searchBar {
+    flex-shrink: 0;
+    margin: 10px;
+    padding: 8px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+#descPanel {
+    flex: 1;
+    overflow: auto;
+}
+
+.divider {
+    width: 5px;
+    cursor: col-resize;
+}
+
+.toolbar {
+    height: 60px;
+}

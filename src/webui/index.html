@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Function Table</title>
-    <link rel="stylesheet" href="style.css?v=2" />
+    <link rel="stylesheet" href="style.css?v=3" />
     <!-- <link rel="stylesheet" href="description.css" /> -->
 
 </head>
@@ -16,36 +16,43 @@
             <div class="panel table-panel" id="tablePanel">
                 <h4>Function Table</h4>
 
-                <table id="funcTable"> <!-- Right panel -->
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>ID</th>
-                            <th>Function Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added dynamically later -->
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table id="funcTable">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Time</th>
+                                <th>ID</th>
+                                <th>Function Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be added dynamically later -->
+                        </tbody>
+                    </table>
+                </div>
+
                 <input type="text" id="searchBar" onkeyup="searchFunction()" placeholder="Search function name...">
             </div>
 
             <div id="divider" class="divider"></div>
 
-            <div id="descPanel" class="panel desc-panel"> <!-- Left panel -->
+            <div id="descPanel" class="panel desc-panel">
                 <h4>Description</h4>
-                <div id="descContent"></div>
+                <div id="descContent"><br> (ᴗ_ ᴗ。) Nothing Here yet!<br> Click a FucntionCall to see it's
+                    description </div>
             </div>
         </div>
     </div>
+
     <div class="toolbar">
         <button class="tool-btn">start</button>
         <button class="tool-btn">stop</button>
         <button class="tool-btn">resume</button>
+
     </div>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=3"></script>
 </body>
 
 </html>

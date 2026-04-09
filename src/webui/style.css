@@ -67,7 +67,7 @@ h4 {
 
 /* RIGHT panel = resizable by slider */
 .table-panel {
-    width: 30%;
+    width: 50%;
     overflow-x: auto;
     height: 90vh;
     scrollbar-color: #222730 #161b22;
@@ -243,8 +243,4 @@ body {
 .divider {
     width: 5px;
     cursor: col-resize;
-}
-
-.toolbar {
-    height: 60px;
 }

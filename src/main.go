@@ -7,6 +7,8 @@ import (
 	"log"
 	"time"
 
+	"giu_ui/inject"
+
 	g "github.com/AllenDang/giu"
 	webview "github.com/webview/webview_go"
 )
@@ -57,7 +59,7 @@ func main() {
 	w.Bind("debugCommand", DebugCommand)
 	w.Bind("openFileDialog", OpenFileDialog)
 	giveToJs(w)
-	// w.Bind("injectHookDll", inject.InjecHookDll)
+	w.Bind("injectHookDll", inject.InjectHookDll)
 
 	w.Run()
 

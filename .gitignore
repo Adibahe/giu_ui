@@ -1,3 +1,5 @@
 ./src/*.exe
 ./src/*.sqlite3
 ./src/*.db
+*.exe
+*.dll

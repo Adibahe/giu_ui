@@ -37,6 +37,7 @@ func main() {
 	w.SetSize(900, 700, webview.HintNone)
 	waitForServer("http://localhost:8080")
 	w.Navigate(fmt.Sprintf("http://localhost:8080/?t=%d", time.Now().UnixNano()))
+
 	if !*test {
 		go openPipe(msgchan) // used to get data from backend (eg. function calls, id)
 	} else {
@@ -53,7 +54,11 @@ func main() {
 			w.Eval(js)
 		}
 	})
+	w.Bind("debugCommand", DebugCommand)
+	w.Bind("openFileDialog", OpenFileDialog)
 	giveToJs(w)
+	// w.Bind("injectHookDll", inject.InjecHookDll)
+
 	w.Run()
 
 }

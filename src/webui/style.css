@@ -130,33 +130,6 @@ tbody tr:hover {
     border-bottom: none;
 }
 
-/* Bottom toolbar */
-.toolbar {
-    width: 100%;
-    margin-top: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Toolbar buttons */
-.tool-btn {
-    background-color: #21262d;
-    color: #c9d1d9;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 5px 5px;
-    font-family: Consolas, "Courier New", monospace;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.tool-btn:hover {
-    background-color: #30363d;
-    color: #58a6ff;
-}
-
 #descContent {
     flex: 1;
     overflow-y: auto;
@@ -243,4 +216,39 @@ body {
 .divider {
     width: 5px;
     cursor: col-resize;
+}
+
+/* .inject-panel {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    width: 300px;
+    padding: 15px;
+    background: #1e1e1e;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.inject-panel input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.inject-panel button {
+    margin-top: 10px;
+    width: 100%;
+} */
+
+.input-group {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    flex: 1;
 }

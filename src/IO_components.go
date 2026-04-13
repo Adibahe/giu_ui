@@ -24,7 +24,7 @@ func testingUi(msgchan chan message) {
 
 		msgchan <- msg
 
-		time.Sleep(time.Second)
+		time.Sleep(time.Second / 2)
 		i++
 	}
 }

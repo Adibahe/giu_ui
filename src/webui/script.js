@@ -123,6 +123,86 @@ function searchFunction() {
 	}
 }
 
+function handleClick(action) {
+	console.log("Clicked:", action);
+
+	debugCommand(action)
+		.then(() => {
+			console.log("Command sent:", action);
+		})
+		.catch(err => {
+			console.error("Error:", err);
+		});
+}
+
+document.addEventListener("click", function (event) {
+	const panel = document.getElementById("injectPanel");
+	const injectBtn = document.querySelector(".inject-btn");
+
+	if (panel.style.display !== "block") return;
+
+	const isInsidePanel = panel.contains(event.target);
+
+	const isInjectButton = injectBtn.contains(event.target);
+
+	if (!isInsidePanel && !isInjectButton) {
+		panel.style.display = "none";
+	}
+});
+
+function browseFile(type) {
+	// Call Go
+	console.log("searching for:", type);
+
+	openFileDialog(type).then(path => {
+		if (!path) return;
+
+		if (type === "dll") {
+			document.getElementById("dllPath").value = path;
+		} else if (type === "exe") {
+			document.getElementById("exePath").value = path;
+		}
+	});
+}
+
+function toggleInjectPanel() {
+	const panel = document.getElementById("injectPanel");
+
+	if (panel.style.display === "block") {
+		panel.style.display = "none";
+	} else {
+		panel.style.display = "block";
+	}
+}
+
+function handleInject(remove = false) {
+	const dllPath = document.getElementById("dllPath").value.trim();
+	const exePath = document.getElementById("exePath").value.trim();
+
+	if (!dllPath) {
+		alert("Please select DLL path");
+		return;
+	}
+
+	if (!exePath) {
+		alert("Please select executable path");
+		return;
+	}
+
+	console.log("DLL:", dllPath);
+	console.log("EXE:", exePath);
+
+	injectHookDll(dllPath, exePath, remove)
+		.then(() => {
+			console.log("Injection success");
+			alert("DLL Injected Successfully");
+		})
+		.catch(err => {
+			console.error("Injection failed:", err);
+			alert("Injection failed: " + err);
+		});
+}
+
 window.addEventListener("load", function () {
 	if (typeof onPageReload === "function") {
 		onPageReload()

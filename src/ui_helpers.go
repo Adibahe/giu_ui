@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"giu_ui/rad_api"
 	"log"
 	"os/exec"
+
+	"github.com/sqweek/dialog"
 
 	webview "github.com/webview/webview_go"
 )
@@ -50,4 +53,53 @@ func openExternalLink(url string) string {
 		return err.Error()
 	}
 	return "ok"
+}
+
+var r_api rad_api.RadIpcState
+
+func DebugCommand(action string) {
+	var err error
+
+	switch action {
+
+	case "step_into":
+		err = r_api.SendCommand(rad_api.CMD_STEP_INTO, "")
+
+	case "step_over":
+		err = r_api.SendCommand(rad_api.CMD_STEP_OVER, "")
+
+	case "run":
+		err = r_api.SendCommand(rad_api.CMD_RUN, "")
+
+	case "stop":
+		err = r_api.SendCommand(rad_api.CMD_HALT, "")
+
+	default:
+		fmt.Println("Unknown action:", action)
+		return
+	}
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+}
+
+func OpenFileDialog(fileType string) string {
+	log.Println("In OpenFileDialog")
+	var path string
+	var err error
+
+	if fileType == "dll" {
+		path, err = dialog.File().Filter("DLL Files", "dll").Load()
+	} else if fileType == "exe" {
+		path, err = dialog.File().Filter("Executable Files", "exe").Load()
+	} else {
+		path, err = dialog.File().Load()
+	}
+
+	if err != nil {
+		return ""
+	}
+
+	return path
 }

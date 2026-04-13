@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Function Table</title>
     <link rel="stylesheet" href="style.css?v=3" />
+    <link rel="stylesheet" href="toolBar_Style.css?v=3" />
     <!-- <link rel="stylesheet" href="description.css" /> -->
-
 </head>
 
 <body>
@@ -46,13 +46,35 @@
     </div>
 
     <div class="toolbar">
-        <button class="tool-btn">start</button>
-        <button class="tool-btn">stop</button>
-        <button class="tool-btn">resume</button>
+
+        <div class="toolbar-left">
+            <button class="tool-btn inject-btn" onclick="toggleInjectPanel()">Inject</button>
+        </div>
+
+        <div class="toolbar-center">
+            <button class="tool-btn" onclick="handleClick('step_into')">Step Into</button>
+            <button class="tool-btn" onclick="handleClick('step_over')">Step Over</button>
+            <button class="tool-btn" onclick="handleClick('run')">Run</button>
+            <button class="tool-btn" onclick="handleClick('stop')">Stop</button>
+        </div>
+
+    </div>
+    <div id="injectPanel" class="inject-panel">
+
+        <div class="input-group">
+            <input type="text" id="dllPath" placeholder="Insert DLL path">
+            <button class="tool-btn" onclick="browseFile('dll')" style="width: auto;">Browse</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="exePath" placeholder="Insert executable path">
+            <button class="tool-btn" onclick="browseFile('exe')" style="width: auto;">Browse</button>
+        </div>
+        <button class="tool-btn" onclick="handleInject()"> inject </button>
 
     </div>
 
-    <script src="script.js?v=3"></script>
+    <script src=" script.js?v=3"></script>
 </body>
 
 </html>

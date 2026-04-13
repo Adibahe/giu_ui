@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"giu_ui/rad_api"
 	"log"
 	"os/exec"
 
 	"github.com/sqweek/dialog"
+	"github.com/YUSHACOD/rad_api"
 
 	webview "github.com/webview/webview_go"
 )

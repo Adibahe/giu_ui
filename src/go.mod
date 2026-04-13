@@ -1,10 +1,12 @@
 module giu_ui
 
-go 1.25.1
+go 1.26.1
 
 require (
 	github.com/AllenDang/giu v0.14.1
 	github.com/Microsoft/go-winio v0.6.2
+	github.com/YUSHACOD/rad_api v0.0.0-20260413153825-11a55396d695
+	github.com/sqweek/dialog v0.0.0-20260123140253-64c163d53aac
 	github.com/webview/webview_go v0.0.0-20240831120633-6173450d4dd6
 	modernc.org/sqlite v1.47.0
 )
@@ -24,7 +26,6 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/sahilm/fuzzy v0.1.1 // indirect
-	github.com/sqweek/dialog v0.0.0-20260123140253-64c163d53aac // indirect
 	golang.design/x/hotkey v0.4.1 // indirect
 	golang.design/x/mainthread v0.3.0 // indirect
 	golang.org/x/image v0.27.0 // indirect

@@ -1,0 +1,48 @@
+// raddbg 0.9.25 project file
+
+recent_file: path: "hookdll/hooks.hpp"
+recent_file: path: "hookdll/hook.cpp"
+recent_file: path: "../../raddebugger/src/raddbg/raddbg_main.c"
+recent_file: path: "../../raddebugger/src/base/base_entry_point.c"
+recent_file: path: "../../raddebugger/src/base/base_strings.c"
+recent_file: path: "../../raddebugger/src/os/core/win32/os_core_win32.c"
+recent_file: path: "d:/os/obj/amd64fre/minkernel/crts/ucrt/src/appcrt/startup/mt/objfre/amd64/minkernel/crts/ucrt/src/appcrt/startup/argv_data.cpp"
+recent_file: path: "C:/Users/91724/cpp/graphics_api_test/vulkan/vulkan.c"
+recent_file: path: "C:/SDKBuild/build-X64-1.4.341.0/Vulkan-ValidationLayers/layers/state_tracker/shader_module.cpp"
+recent_file: path: "D:/a/_work/1/s/src/vctools/crt/vcstartup/src/startup/exe_common.inl"
+recent_file: path: "sample_targets/MessageBox.cpp"
+recent_file: path: "D:/HeavyPrograms/VisualStudio2026/VC/Tools/MSVC/14.50.35717/include/__msvc_ostream.hpp"
+recent_file: path: "D:/HeavyPrograms/VisualStudio2026/VC/Tools/MSVC/14.50.35717/include/__msvc_string_view.hpp"
+debug_info:
+{
+  path: "E:/tmp/proj-mini/p7/builds/debug/samples/MessageBox.pdb"
+  timestamp: 66208465441295
+}
+debug_info:
+{
+  path: "E:/tmp/proj-mini/p7/builds/debug/hook.pdb"
+  timestamp: 66212012823729
+}
+debug_info:
+{
+  path: "C:/Users/91724/cpp/graphics_api_test/vulkan/vulkan.pdb"
+  timestamp: 66205660751329
+}
+debug_info:
+{
+  path: "C:/VulkanSDK/1.4.341.0/Bin/VkLayer_khronos_validation.pdb"
+  timestamp: 66205250650697
+}
+debug_info:
+{
+  path: "E:/tmp/raddebugger/build/raddbg.pdb"
+  timestamp: 66209956096736
+}
+target:
+{
+  executable: "../../raddebugger/build/raddbg.exe "
+  working_directory: "../../raddebugger/build"
+  enabled: 1
+  debug_subprocesses: 0
+  arguments: "--ipc  run"
+}

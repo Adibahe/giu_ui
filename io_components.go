@@ -1,12 +1,16 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/binary"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"net/http"
+	"strconv"
 	"time"
+
+	"github.com/YUSHACOD/rad_api"
 
 	winio "github.com/Microsoft/go-winio"
 )
@@ -18,7 +22,7 @@ func testingUi(msgchan chan message) {
 	for _, id := range ids {
 
 		var msg message
-		// n := rand.Int64N(1000)
+
 		msg.Id = id
 		msg.Name = ""
 
@@ -32,25 +36,32 @@ func testingUi(msgchan chan message) {
 func handleConn(conn net.Conn, msgchan chan message) {
 	defer conn.Close()
 
-	decoder := json.NewDecoder(conn)
-
 	for {
-		var msg message
-		err := decoder.Decode(&msg)
+		var rawID uint64
+		err := binary.Read(conn, binary.LittleEndian, &rawID)
 		if err != nil {
-			log.Printf("decode failed: %v", err)
+			if err != io.EOF {
+				log.Printf("failed to read binary ID: %v", err)
+			}
 			break
 		}
+
+		if state.auto_running {
+			state.rad.SendCommand(rad_api.CMD_RUN, "")
+		}
+
+		var msg message
+		msg.Id = strconv.FormatUint(rawID, 10)
+
 		fmt.Printf("id: %s funcName: %s \n", msg.Id, msg.Name)
 		msgchan <- msg
 	}
-
 }
 
 func openPipe(msgchan chan message) {
 	log.Println("Started Server!!")
 
-	const pipename = `\\.\pipe\giu_ui_Pipe`
+	const pipename = `\\.\pipe\P7_HOOKS`
 
 	ln, err := winio.ListenPipe(pipename, nil)
 	if err != nil {
@@ -58,15 +69,15 @@ func openPipe(msgchan chan message) {
 	}
 	defer ln.Close()
 
-	//	for {
-	conn, err := ln.Accept()
-	if err != nil {
-		log.Fatalf("Accept() failed: %v", err)
+	for {
+		conn, err := ln.Accept()
+		if err != nil {
+			log.Fatalf("Accept() failed: %v", err)
+		}
+
+		go handleConn(conn, msgchan)
+
 	}
-
-	handleConn(conn, msgchan)
-
-	//	}
 }
 
 func startServer() {

@@ -59,7 +59,11 @@ func main() {
 	w.Bind("debugCommand", DebugCommand)
 	w.Bind("openFileDialog", OpenFileDialog)
 	giveToJs(w)
-	w.Bind("injectHookDll", inject.InjectHookDll)
+	w.Bind("injectHookDll", func(dllPath string, targetPath string, remove bool) {
+		state.dllPath = dllPath
+		state.targetPath = dllPath
+		inject.InjectHookDll(dllPath, targetPath, remove)
+	})
 
 	w.Run()
 

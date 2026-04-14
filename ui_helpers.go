@@ -5,8 +5,10 @@ import (
 	"log"
 	"os/exec"
 
-	"github.com/sqweek/dialog"
+	"giu_ui/winproc"
+
 	"github.com/YUSHACOD/rad_api"
+	"github.com/sqweek/dialog"
 
 	webview "github.com/webview/webview_go"
 )
@@ -55,24 +57,86 @@ func openExternalLink(url string) string {
 	return "ok"
 }
 
-var r_api rad_api.RadIpcState
+var state struct {
+	targetPath     string
+	dllPath        string
+	targetProcess  *winproc.Process
+	radProcess     *winproc.Process
+	target_spawned bool
+	rad            rad_api.RadIpcState
+	auto_running   bool
+	manual_running bool
+}
+
+func startSession() {
+
+	state.auto_running = true
+
+	tp, err := winproc.Start(state.targetPath, true)
+	state.targetProcess = tp
+	if err != nil {
+		log.Fatalf("The target process execution failed %s", err)
+	}
+
+	r, err := winproc.Start("raddbg.exe", false)
+	if err != nil {
+		log.Fatalf("RAD process execution failed %s", err)
+	}
+	state.radProcess = r
+
+	state.rad.Init()
+	state.rad.SendCommand(rad_api.CMD_LAUNCH_AND_RUN, "")
+}
+
+func exitSession() {
+
+	state.targetProcess.Close()
+	state.rad.Release()
+	state.radProcess.Close()
+}
 
 func DebugCommand(action string) {
 	var err error
 
 	switch action {
 
-	case "step_into":
-		err = r_api.SendCommand(rad_api.CMD_STEP_INTO, "")
+	case "manual_run":
+		fmt.Println("manual_run")
+		if !(state.manual_running || state.auto_running) {
+			startSession()
+		}
 
-	case "step_over":
-		err = r_api.SendCommand(rad_api.CMD_STEP_OVER, "")
+	case "auto_run":
+		fmt.Println("auto_run")
+		if state.manual_running {
+			if state.auto_running {
+			} else {
+				state.auto_running = true
+				go func() {
+					state.targetProcess.Wait()
+				}()
+			}
+		} else {
+			if state.auto_running {
+			} else {
+				state.auto_running = true
+				go func() {
+					state.targetProcess.Wait()
+					exitSession()
+				}()
+			}
+		}
 
-	case "run":
-		err = r_api.SendCommand(rad_api.CMD_RUN, "")
+	case "step":
+		err = state.rad.SendCommand(rad_api.CMD_RUN, "")
 
-	case "stop":
-		err = r_api.SendCommand(rad_api.CMD_HALT, "")
+	case "halt":
+		fmt.Println("halt")
+		state.auto_running = false
+		err = state.rad.SendCommand(rad_api.CMD_HALT, "")
+
+	case "exit":
+		exitSession()
 
 	default:
 		fmt.Println("Unknown action:", action)

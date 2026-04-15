@@ -9,13 +9,11 @@ import (
 
 	"giu_ui/inject"
 
-	g "github.com/AllenDang/giu"
 	webview "github.com/webview/webview_go"
 )
 
 var db *sql.DB
 var recent = make(map[string]message)
-var monoFont *g.FontInfo
 
 func main() {
 

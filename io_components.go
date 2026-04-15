@@ -91,7 +91,7 @@ func startServer() {
 }
 
 func waitForServer(url string) {
-	for i := 0; i < 20; i++ {
+	for range 20 {
 		resp, err := http.Get(url)
 		if err == nil {
 			resp.Body.Close()

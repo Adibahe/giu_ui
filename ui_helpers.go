@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"time"
 
 	"giu_ui/winproc"
 
@@ -33,7 +34,7 @@ func uiUpdater(w webview.WebView, msgChan <-chan message, messages *[]message) {
 	}()
 }
 
-func onPageReload(messages []message) {
+func onPageReload(_ []message) {
 	fmt.Println("Webpage loaded/reloaded")
 }
 
@@ -70,12 +71,12 @@ var state struct {
 
 func startSession() {
 
-	state.auto_running = true
+	state.manual_running = true
 
 	tp, err := winproc.Start(state.targetPath, true)
 	state.targetProcess = tp
 	if err != nil {
-		log.Fatalf("The target process execution failed %s", err)
+		log.Fatalf("The target process execution failed %s, %s", err, state.targetPath)
 	}
 
 	r, err := winproc.Start("raddbg.exe", false)
@@ -84,15 +85,44 @@ func startSession() {
 	}
 	state.radProcess = r
 
+	time.Sleep(1000 * time.Millisecond)
+
 	state.rad.Init()
-	state.rad.SendCommand(rad_api.CMD_LAUNCH_AND_RUN, "")
+	err = state.rad.SendCommand(rad_api.CMD_ATTACH, fmt.Sprintf("%d", state.targetProcess.Pid))
+	if err != nil {
+		log.Fatalf("Failure attaching to the target %v", err)
+	}
+
+	time.Sleep(1000 * time.Millisecond)
+
+	err = state.targetProcess.Resume()
+	if err != nil {
+		log.Fatalf("Failure resuming the targetProcess %v", err)
+	}
+
+	time.Sleep(400 * time.Millisecond)
+
+	err = state.rad.SendCommand(rad_api.CMD_RUN, "")
+	if err != nil {
+		log.Fatalf("Failure sending first run command %v", err)
+	}
+
+	go waitForTargetExit()
 }
 
 func exitSession() {
 
+	state.manual_running = false
+	state.auto_running = false
+	state.rad.SendCommand(rad_api.CMD_KILL_ALL, "")
 	state.targetProcess.Close()
 	state.rad.Release()
 	state.radProcess.Close()
+}
+
+func waitForTargetExit() {
+	state.targetProcess.Wait()
+	exitSession()
 }
 
 func DebugCommand(action string) {
@@ -112,18 +142,14 @@ func DebugCommand(action string) {
 			if state.auto_running {
 			} else {
 				state.auto_running = true
-				go func() {
-					state.targetProcess.Wait()
-				}()
+				go waitForTargetExit()
 			}
 		} else {
 			if state.auto_running {
 			} else {
 				state.auto_running = true
-				go func() {
-					state.targetProcess.Wait()
-					exitSession()
-				}()
+				startSession()
+				go waitForTargetExit()
 			}
 		}
 
@@ -133,7 +159,6 @@ func DebugCommand(action string) {
 	case "halt":
 		fmt.Println("halt")
 		state.auto_running = false
-		err = state.rad.SendCommand(rad_api.CMD_HALT, "")
 
 	case "exit":
 		exitSession()
@@ -153,12 +178,19 @@ func OpenFileDialog(fileType string) string {
 	var path string
 	var err error
 
-	if fileType == "dll" {
-		path, err = dialog.File().Filter("DLL Files", "dll").Load()
-	} else if fileType == "exe" {
-		path, err = dialog.File().Filter("Executable Files", "exe").Load()
-	} else {
-		path, err = dialog.File().Load()
+	switch fileType {
+	case "dll":
+		{
+			path, err = dialog.File().Filter("DLL Files", "dll").Load()
+		}
+	case "exe":
+		{
+			path, err = dialog.File().Filter("Executable Files", "exe").Load()
+		}
+	default:
+		{
+			path, err = dialog.File().Load()
+		}
 	}
 
 	if err != nil {

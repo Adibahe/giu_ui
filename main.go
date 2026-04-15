@@ -59,7 +59,7 @@ func main() {
 	giveToJs(w)
 	w.Bind("injectHookDll", func(dllPath string, targetPath string, remove bool) {
 		state.dllPath = dllPath
-		state.targetPath = dllPath
+		state.targetPath = targetPath 
 		inject.InjectHookDll(dllPath, targetPath, remove)
 	})
 

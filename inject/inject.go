@@ -26,7 +26,7 @@ func InjectHookDll(dll_path string, exec_path string, remove bool) error {
 	defer C.free(unsafe.Pointer(exec))
 
 	rm := 1
-	if remove {
+	if !remove {
 		rm = 0
 	}
 
